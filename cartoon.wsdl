@@ -1,0 +1,68 @@
+<?xml version ='1.0' encoding ='UTF-8' ?>
+<definitions name='CartoonNetwork'
+  targetNamespace='http://example.org/CartoonNetwork'
+  xmlns:tns=' http://example.org/CartoonNetwork '
+  xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/'
+  xmlns:xsd='http://www.w3.org/2001/XMLSchema'
+  xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/'
+  xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'
+  xmlns='http://schemas.xmlsoap.org/wsdl/'>
+
+<message name='loginUserRequest'>
+  <part name='user' type='xsd:string'/>
+  <part name='pass' type='xsd:string'/>
+</message>
+<message name='loginUserResponse'>
+  <part name='Result' type='xsd:object'/>
+</message>
+<message name='isLoggedRequest'>
+  <part name='section' type='xsd:string'/>
+</message>
+<message name='isLoggedResponse'>
+  <part name='Result' type='xsd:string'/>
+</message>
+
+<portType name='CartoonNetworkPortType'>
+  <operation name='loginUser'>
+    <input message='loginUserRequest'/>
+    <output message='loginUserResponse'/>
+  </operation>
+  <operation name='isLogged'>
+    <input message='isLoggedRequest'/>
+    <output message='isLoggedResponse'/>
+  </operation>
+</portType>
+
+<binding name='CartoonNetworkBinding' type='CartoonNetworkPortType'>
+  <soap:binding style='rpc'
+    transport='http://schemas.xmlsoap.org/soap/http'/>
+  <operation name='loginUser'>
+    <soap:operation soapAction='urn:xmethods-delayed-quotes#loginUser'/>
+    <input>
+      <soap:body use='encoded' namespace='urn:xmethods-delayed-quotes'
+        encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/>
+    </input>
+    <output>
+      <soap:body use='encoded' namespace='urn:xmethods-delayed-quotes'
+        encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/>
+    </output>
+  </operation>
+    <operation name='isLogged'>
+    <soap:operation soapAction='urn:xmethods-delayed-quotes#isLogged'/>
+    <input>
+      <soap:body use='encoded' namespace='urn:xmethods-delayed-quotes'
+        encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/>
+    </input>
+    <output>
+      <soap:body use='encoded' namespace='urn:xmethods-delayed-quotes'
+        encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/>
+    </output>
+  </operation>
+</binding>
+
+<service name='CartoonNetworkService'>
+  <port name='CartoonNetworkPort' binding='CartoonNetworkBinding'>
+    <soap:address location='http://www.cartoonnetwork.co.uk//soap//server.php'/>
+  </port>
+</service>
+</definitions>
