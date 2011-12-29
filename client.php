@@ -7,8 +7,6 @@
  * @file
  * Provides an example PHP SOAP client
  * 
- * @author 
- * Mark Rushton
  * 
  */
 
@@ -23,7 +21,7 @@ try{
 	$response['goodbyeResponse'] = $client->getGoodbye();
 	
 	print "<pre>";
-	print_r($response);
+		print_r($response);
 	print "</pre>";
 	
 } catch(SoapFault $e){

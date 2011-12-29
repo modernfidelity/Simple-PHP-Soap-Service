@@ -12,6 +12,7 @@
 // Load functions
 require 'service_functions.php';
 
+// Debug : don't cache WSDL file whilst in development
 ini_set("soap.wsdl_cache_enabled","0");
 
 $server = new SoapServer("simple.wsdl");
