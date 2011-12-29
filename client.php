@@ -7,28 +7,30 @@
  * @file
  * Provides an example PHP SOAP client
  * 
+ * @author 
+ * Mark Rushton
+ * 
  */
 
 try{
 
 	$client = new SoapClient("simple.wsdl");
 
-	$response = $client->getHello();
+	$response = array();
 	
+	$response['helloResponse'] = $client->getHello();
+	
+	$response['goodbyeResponse'] = $client->getGoodbye();
+	
+	print "<pre>";
 	print_r($response);
-	
-	
+	print "</pre>";
 	
 } catch(SoapFault $e){
+	
 	var_dump($e);
+
 }
-
-
-
-
-
-
-
 
 ?>
 

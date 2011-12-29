@@ -1,115 +1,79 @@
 <?xml version ='1.0' encoding ='UTF-8' ?>
 
-<definitions name='StockQuote'
+<definitions name='SimpleHelloService'
 
-  targetNamespace='http://example.org/StockQuote'
+	targetNamespace='http://www.modernfidelity.co.uk/SimpleService'
+	xmlns:tns=' http://www.modernfidelity.co.uk/SimpleService' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/'
+	xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/'
+	xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns='http://schemas.xmlsoap.org/wsdl/'>
 
-  xmlns:tns=' http://example.org/StockQuote '
 
-  xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/'
+	<!-- MESSAGES -->
 
-  xmlns:xsd='http://www.w3.org/2001/XMLSchema'
+	<message name="getHelloRequest">
+		<part name="parameters" element="tns:getHelloRequest" />
+	</message>
 
-  xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/'
+	<message name="getHelloResponse">
+		<part name="parameters" element="tns:getHelloResponse" />
+	</message>
 
-  xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'
+	<message name="getGoodbyeRequest">
+		<part name="parameters" element="tns:getGoodbyeRequest" />
+	</message>
 
-  xmlns='http://schemas.xmlsoap.org/wsdl/'>
+	<message name="getGoodbyeResponse">
+		<part name="parameters" element="tns:getGoodbyeResponse" />
+	</message>
 
-<!-- MESSAGE / METHODS -->
+	<!-- PORT TYPE -->
 
-    <wsdl:types><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.org/StockQuote">
-	<xsd:element name="NewOperation">
-		<xsd:complexType>
-			<xsd:sequence>
-				<xsd:element name="in" type="xsd:string"></xsd:element>
-			</xsd:sequence>
-		</xsd:complexType>
-	</xsd:element>
-	<xsd:element name="NewOperationResponse">
-		<xsd:complexType>
-			<xsd:sequence>
-				<xsd:element name="out" type="xsd:string"></xsd:element>
-			</xsd:sequence>
-		</xsd:complexType>
-	</xsd:element></xsd:schema></wsdl:types>
-    <message name='getHelloRequest'>
+	<portType name="SimpleHello">
+		<operation name='getHello'>
+			<input message='tns:getHelloRequest' />
+			<output message='tns:getHelloResponse' />
+		</operation>
 
-  <part name='symbol' type='xsd:string'/>
+		<wsdl:operation name="getGoodbye">
+			<wsdl:input message="getGoodbyeRequest"></wsdl:input>
+			<wsdl:output message="getGoodbyeResponse"></wsdl:output>
+		</wsdl:operation>
+	</portType>
 
-</message>
+	<!-- BINDINGS -->
 
-<message name='getHelloResponse'>
+	<binding name="SimpleHelloPortBinding" type="tns:SimpleHello">
 
-  <part name='Result' type='xsd:string'/>
+		<soap:binding style='rpc' transport='http://schemas.xmlsoap.org/soap/http' />
 
-</message>
+		<operation name='getHello'>
+			<soap:operation soapAction='getHello' />
+			<input>
+				<soap:body use='encoded' namespace='http://www.modernfidelity.co.uk' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+			</input>
+			<output>
+				<soap:body use='encoded' namespace='http://www.modernfidelity.co.uk' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+			</output>
+		</operation>
 
-<!-- PORT INFO -->
+		<operation name='getGoodbye'>
+			<soap:operation soapAction='getGoodbye' />
+			<input>
+				<soap:body use='encoded' namespace='http://www.modernfidelity.co.uk' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+			</input>
+			<output>
+				<soap:body use='encoded' namespace='http://www.modernfidelity.co.uk' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' />
+			</output>
+		</operation>
+		
+	</binding>
 
-    <wsdl:message name="getGoodbyeRequest">
-    	<wsdl:part name="parameters" element="NewOperation"></wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="getGoodbyeResponse">
-    	<wsdl:part name="parameters" element="wsdl:getGoodbyeResponse"></wsdl:part>
-    </wsdl:message>
-    <portType name="simple">
+	<!-- SERVICE -->
 
-  <operation name='getHello'>
-
-    <input message='tns:getHelloRequest'/>
-
-    <output message='tns:getHelloResponse'/>
-
-  </operation>
-
-  <wsdl:operation name="getGoodbye">
-  	<wsdl:input message="getGoodbyeRequest"></wsdl:input>
-  	<wsdl:output message="getGoodbyeResponse"></wsdl:output>
-  </wsdl:operation>
-    </portType>
-
-<!-- BINDING INFO -->
-
-<binding name="simpleBinding" type='tns:simple'>
-
-  <soap:binding style='rpc'
-
-    transport='http://schemas.xmlsoap.org/soap/http'/>
-
-  <operation name='getHello'>
-
-    <soap:operation soapAction='urn:xmethods-delayed-quotes#getHello'/>
-
-    <input>
-
-      <soap:body use='encoded' namespace='urn:xmethods-delayed-quotes'
-
-        encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/>
-
-    </input>
-
-    <output>
-
-      <soap:body use='encoded' namespace='urn:xmethods-delayed-quotes'
-
-        encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/>
-
-    </output>
-
-  </operation>
-
-</binding>
-
-<!-- SERVICE DEF -->
-<service name='simple'>
-
-  <port name='simple' binding="simpleBinding">
-
-    <soap:address location='http://localhost:8080/simple-soap-server/server.php'/>
-
-  </port>
-
-</service>
+	<service name="SimpleHelloService">
+		<port name="SimpleHelloPort" binding="tns:SimpleHelloPortBinding">
+			<soap:address location='http://localhost:8080/simple-soap-server/server.php' />
+		</port>
+	</service>
 
 </definitions>

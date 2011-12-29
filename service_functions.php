@@ -2,11 +2,16 @@
 
 function getHello(){
 	//in reality, this data would be coming from a database
-	$string = "HELLO MONKEY";
+	$string = "Hello MONKEY";
 	return $string;
 	
 }
 
+function getGoodbye(){
+	//in reality, this data would be coming from a database
+	$string = "Goodbye MONKEY";
+	return $string;
 
+}
 
 ?>

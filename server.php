@@ -17,6 +17,7 @@ ini_set("soap.wsdl_cache_enabled","0");
 $server = new SoapServer("simple.wsdl");
 
 $server->AddFunction("getHello");
+$server->AddFunction("getGoodbye");
 
 $server->handle();
 
